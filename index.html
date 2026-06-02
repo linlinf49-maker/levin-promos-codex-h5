@@ -1,0 +1,1869 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Levin Promos 业务 Codex 指南 | 让外贸动作可检查</title>
+  <meta name="description" content="面向 Levin Promos 业务部门的 Codex H5：询盘、报价、样品、订单、周报如何借助 Codex 做成可检查结果。">
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f6f1e8;
+      --paper-2: #fffaf2;
+      --ink: #1e2320;
+      --muted: #68726b;
+      --line: #d8d0c2;
+      --line-strong: #b5ad9f;
+      --green: #136b55;
+      --green-2: #d8efe4;
+      --coral: #d95f43;
+      --coral-2: #ffe0d6;
+      --amber: #b68422;
+      --amber-2: #f3dfb6;
+      --blue: #2d5f7c;
+      --blue-2: #d7e4ee;
+      --white: #ffffff;
+      --shadow: 0 18px 48px rgba(52, 42, 30, 0.13);
+      --shadow-soft: 0 12px 28px rgba(52, 42, 30, 0.09);
+      --radius: 8px;
+      --max: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      letter-spacing: 0;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -2;
+      background:
+        linear-gradient(rgba(30, 35, 32, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(30, 35, 32, 0.035) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: rgba(30, 35, 32, 0.08);
+      z-index: 30;
+    }
+
+    .progress span {
+      display: block;
+      width: 0%;
+      height: 100%;
+      background: var(--coral);
+    }
+
+    .nav {
+      position: sticky;
+      top: 4px;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: rgba(246, 241, 232, 0.82);
+      border-bottom: 1px solid rgba(30, 35, 32, 0.1);
+    }
+
+    .nav-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 14px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 34px;
+      border: 1px solid var(--ink);
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: var(--ink);
+      color: var(--paper-2);
+      font-size: 0.82rem;
+      font-weight: 800;
+      flex: 0 0 auto;
+    }
+
+    .brand strong {
+      display: block;
+      font-size: 0.96rem;
+      line-height: 1.1;
+    }
+
+    .brand small {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 0.72rem;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      width: 100%;
+      max-width: 100%;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .nav-links::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-links a {
+      padding: 8px 10px;
+      border-radius: 999px;
+      color: #4e574f;
+      font-size: 0.86rem;
+      white-space: nowrap;
+    }
+
+    .nav-links a.active {
+      background: var(--ink);
+      color: var(--paper-2);
+    }
+
+    main {
+      overflow: hidden;
+    }
+
+    .section {
+      position: relative;
+      padding: 86px 22px;
+    }
+
+    .section.compact {
+      padding-top: 62px;
+      padding-bottom: 62px;
+    }
+
+    .inner {
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 18px;
+      color: var(--green);
+      font-weight: 800;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 2px;
+      background: currentColor;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      margin-bottom: 22px;
+      max-width: 820px;
+      font-size: 4.2rem;
+      line-height: 0.98;
+      font-weight: 900;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      max-width: 760px;
+      font-size: 2.65rem;
+      line-height: 1.06;
+      font-weight: 900;
+    }
+
+    h3 {
+      margin-bottom: 10px;
+      font-size: 1.24rem;
+      line-height: 1.25;
+    }
+
+    .lead {
+      max-width: 690px;
+      margin-bottom: 26px;
+      color: #3e4841;
+      font-size: 1.18rem;
+      line-height: 1.75;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .hero {
+      min-height: calc(100vh - 72px);
+      display: grid;
+      align-items: center;
+      padding-top: 54px;
+      padding-bottom: 54px;
+      border-bottom: 1px solid rgba(30, 35, 32, 0.09);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(440px, 1.05fr);
+      gap: 42px;
+      align-items: center;
+    }
+
+    .hero-copy {
+      min-width: 0;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .button,
+    .ghost-button {
+      border: 1px solid var(--ink);
+      border-radius: 8px;
+      min-height: 44px;
+      padding: 11px 15px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 180ms ease, background 180ms ease, color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .button {
+      background: var(--ink);
+      color: var(--paper-2);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .ghost-button {
+      background: rgba(255, 250, 242, 0.78);
+      color: var(--ink);
+    }
+
+    .button:hover,
+    .ghost-button:hover {
+      transform: translateY(-2px);
+    }
+
+    .hero-note {
+      margin-top: 22px;
+      padding-left: 14px;
+      border-left: 3px solid var(--coral);
+      color: #4a504b;
+      line-height: 1.65;
+      max-width: 570px;
+    }
+
+    .workbench {
+      position: relative;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      background: var(--white);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .workbench-top {
+      height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 15px;
+      background: #242a27;
+      color: #f5efe5;
+    }
+
+    .window-dots {
+      display: flex;
+      gap: 7px;
+    }
+
+    .window-dots span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--coral);
+    }
+
+    .window-dots span:nth-child(2) {
+      background: var(--amber);
+    }
+
+    .window-dots span:nth-child(3) {
+      background: var(--green);
+    }
+
+    .workbench-label {
+      font-size: 0.78rem;
+      color: #d9d1c3;
+    }
+
+    .workbench-body {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      min-height: 500px;
+    }
+
+    .side-panel {
+      background: #f1ebdf;
+      border-right: 1px solid var(--line);
+      padding: 14px;
+    }
+
+    .side-title {
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .project-item {
+      min-height: 38px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      color: #49534c;
+    }
+
+    .project-item.active {
+      background: var(--ink);
+      color: var(--paper-2);
+    }
+
+    .project-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0.75;
+      flex: 0 0 auto;
+    }
+
+    .thread-panel {
+      padding: 18px;
+      display: grid;
+      gap: 14px;
+      background:
+        linear-gradient(180deg, rgba(255, 250, 242, 0.74), rgba(255, 255, 255, 0.96));
+    }
+
+    .prompt-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper-2);
+      padding: 14px;
+    }
+
+    .prompt-card b {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.86rem;
+    }
+
+    .prompt-text {
+      color: #303933;
+      line-height: 1.55;
+      font-size: 0.98rem;
+    }
+
+    .agent-stack {
+      display: grid;
+      gap: 10px;
+    }
+
+    .agent-row {
+      display: grid;
+      grid-template-columns: 90px 1fr 72px;
+      gap: 10px;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--white);
+    }
+
+    .agent-row strong {
+      font-size: 0.86rem;
+    }
+
+    .agent-row span {
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.35;
+    }
+
+    .status {
+      justify-self: end;
+      min-width: 62px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      text-align: center;
+      font-size: 0.74rem;
+      font-weight: 800;
+      background: var(--green-2);
+      color: var(--green);
+    }
+
+    .terminal {
+      min-height: 122px;
+      border-radius: 8px;
+      background: #1f2421;
+      color: #e7dfd2;
+      padding: 14px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.78rem;
+      line-height: 1.55;
+      overflow: hidden;
+    }
+
+    .terminal .ok {
+      color: #a8e6c8;
+    }
+
+    .terminal .warn {
+      color: #ffd28a;
+    }
+
+    .visual-tag {
+      position: absolute;
+      right: 22px;
+      bottom: 18px;
+      padding: 10px 12px;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      background: rgba(255, 250, 242, 0.92);
+      box-shadow: var(--shadow-soft);
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .source-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 24px;
+    }
+
+    .source-strip a {
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      padding: 8px 11px;
+      background: rgba(255, 250, 242, 0.75);
+      color: #4d574f;
+      font-size: 0.82rem;
+    }
+
+    .answer-band {
+      background: var(--ink);
+      color: var(--paper-2);
+      border-block: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .answer-grid {
+      display: grid;
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 34px;
+      align-items: stretch;
+    }
+
+    .big-answer {
+      padding: 34px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.045);
+    }
+
+    .big-answer h2 {
+      color: var(--paper-2);
+      margin-bottom: 16px;
+    }
+
+    .big-answer p {
+      color: #ded7cc;
+      line-height: 1.75;
+      font-size: 1.1rem;
+    }
+
+    .quote-line {
+      margin-top: 20px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.14);
+      color: #f7d6c7;
+      font-weight: 900;
+      font-size: 1.1rem;
+      line-height: 1.45;
+    }
+
+    .comparison {
+      display: grid;
+      gap: 12px;
+    }
+
+    .compare-row {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 18px;
+      padding: 18px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.075);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .compare-row b {
+      color: #fff3e5;
+    }
+
+    .compare-row span {
+      color: #d6cec2;
+      line-height: 1.62;
+    }
+
+    .persona-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 0.8fr) minmax(380px, 1.2fr);
+      gap: 26px;
+      align-items: start;
+    }
+
+    .segment {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .seg-button,
+    .scenario-button,
+    .mode-button {
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      background: rgba(255, 250, 242, 0.86);
+      min-height: 48px;
+      padding: 10px 12px;
+      color: var(--ink);
+      font-weight: 800;
+      cursor: pointer;
+      transition: background 160ms ease, color 160ms ease, transform 160ms ease, border-color 160ms ease;
+    }
+
+    .seg-button:hover,
+    .scenario-button:hover,
+    .mode-button:hover {
+      transform: translateY(-1px);
+      border-color: var(--ink);
+    }
+
+    .seg-button.active,
+    .scenario-button.active,
+    .mode-button.active {
+      background: var(--green);
+      color: var(--paper-2);
+      border-color: var(--green);
+    }
+
+    .persona-card {
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      background: var(--white);
+      box-shadow: var(--shadow-soft);
+      padding: 28px;
+      min-height: 312px;
+    }
+
+    .persona-card small {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--coral);
+      font-weight: 900;
+    }
+
+    .persona-card h3 {
+      font-size: 1.7rem;
+      line-height: 1.16;
+      margin-bottom: 16px;
+    }
+
+    .persona-card p {
+      color: #46514a;
+      line-height: 1.7;
+    }
+
+    .persona-outcomes {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .mini-metric {
+      min-height: 88px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper-2);
+    }
+
+    .mini-metric b {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--ink);
+    }
+
+    .mini-metric span {
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.35;
+    }
+
+    .workflow {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .step {
+      position: relative;
+      padding: 20px;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      background: var(--white);
+      box-shadow: var(--shadow-soft);
+      min-height: 230px;
+    }
+
+    .step-number {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 18px;
+      background: var(--ink);
+      color: var(--paper-2);
+      font-weight: 900;
+    }
+
+    .step h3 {
+      margin-bottom: 12px;
+    }
+
+    .step p {
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 0;
+    }
+
+    .step:nth-child(2) .step-number {
+      background: var(--coral);
+    }
+
+    .step:nth-child(3) .step-number {
+      background: var(--blue);
+    }
+
+    .step:nth-child(4) .step-number {
+      background: var(--green);
+    }
+
+    .scenario-layout {
+      display: grid;
+      grid-template-columns: minmax(260px, 0.7fr) minmax(0, 1.3fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .scenario-list {
+      display: grid;
+      gap: 8px;
+      position: sticky;
+      top: 92px;
+    }
+
+    .scenario-button {
+      text-align: left;
+      min-height: 58px;
+    }
+
+    .task-board {
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      background: var(--white);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .task-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 18px;
+      border-bottom: 1px solid var(--line);
+      background: var(--paper-2);
+    }
+
+    .task-head b {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .task-head span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .task-pill {
+      flex: 0 0 auto;
+      padding: 8px 10px;
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      color: var(--green);
+      font-size: 0.82rem;
+      font-weight: 900;
+      background: var(--green-2);
+    }
+
+    .task-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      min-height: 400px;
+    }
+
+    .task-pane {
+      padding: 22px;
+    }
+
+    .task-pane + .task-pane {
+      border-left: 1px solid var(--line);
+      background: #fbf7ee;
+    }
+
+    .prompt-box {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: #384139;
+      line-height: 1.6;
+      min-height: 132px;
+    }
+
+    .deliverable {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .deliverable div {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 46px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--white);
+    }
+
+    .deliverable span {
+      color: var(--muted);
+      font-size: 0.82rem;
+      white-space: nowrap;
+    }
+
+    .checks {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .check-item {
+      display: grid;
+      grid-template-columns: 26px 1fr;
+      gap: 10px;
+      align-items: start;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--white);
+    }
+
+    .check-mark {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--green);
+      color: var(--paper-2);
+      font-size: 0.78rem;
+      font-weight: 900;
+    }
+
+    .check-item b {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .check-item span {
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: 0.9rem;
+    }
+
+    .surface-band {
+      background: #e7eee8;
+      border-block: 1px solid rgba(30, 35, 32, 0.1);
+    }
+
+    .surface-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: 28px;
+      align-items: center;
+    }
+
+    .surfaces {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .surface-card {
+      min-height: 150px;
+      padding: 18px;
+      border: 1px solid rgba(30, 35, 32, 0.18);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .surface-icon {
+      width: 48px;
+      height: 38px;
+      margin-bottom: 14px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: var(--ink);
+      color: var(--paper-2);
+      font-size: 0.86rem;
+      font-weight: 900;
+    }
+
+    .surface-card:nth-child(2) .surface-icon {
+      background: var(--coral);
+    }
+
+    .surface-card:nth-child(3) .surface-icon {
+      background: var(--amber);
+    }
+
+    .surface-card:nth-child(4) .surface-icon {
+      background: var(--blue);
+    }
+
+    .surface-card p {
+      margin-bottom: 0;
+      color: #4c554f;
+      line-height: 1.58;
+      font-size: 0.95rem;
+    }
+
+    .security-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(360px, 0.92fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .mode-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .mode-button {
+      min-height: 42px;
+    }
+
+    .security-card {
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      background: var(--white);
+      box-shadow: var(--shadow-soft);
+      padding: 24px;
+      min-height: 292px;
+    }
+
+    .security-card h3 {
+      font-size: 1.55rem;
+    }
+
+    .security-card p {
+      color: #46514a;
+      line-height: 1.68;
+    }
+
+    .permission-box {
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      background: #242a27;
+      color: var(--paper-2);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .permission-box header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.13);
+    }
+
+    .permission-box header span {
+      color: #d6cec2;
+      font-size: 0.82rem;
+    }
+
+    .permission-body {
+      padding: 18px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .permission-row {
+      display: grid;
+      grid-template-columns: 96px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.055);
+    }
+
+    .permission-row b {
+      color: #f7d6c7;
+      font-size: 0.88rem;
+    }
+
+    .permission-row span {
+      color: #ddd6ca;
+      line-height: 1.5;
+      font-size: 0.9rem;
+    }
+
+    .start-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .start-card {
+      min-height: 255px;
+      padding: 22px;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      background: var(--white);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .start-card b {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      margin-bottom: 18px;
+      border-radius: 8px;
+      background: var(--coral-2);
+      color: var(--coral);
+    }
+
+    .start-card p {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .prompt-sample {
+      margin-top: 16px;
+      padding: 12px;
+      border: 1px dashed var(--line-strong);
+      border-radius: 8px;
+      background: var(--paper-2);
+      color: #3e4741;
+      line-height: 1.5;
+      font-size: 0.92rem;
+    }
+
+    .final-band {
+      background: #fffaf2;
+      border-top: 1px solid var(--line);
+    }
+
+    .final-card {
+      display: grid;
+      grid-template-columns: 0.82fr 1.18fr;
+      gap: 28px;
+      align-items: center;
+      padding: 34px;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      background: var(--ink);
+      color: var(--paper-2);
+      box-shadow: var(--shadow);
+    }
+
+    .final-card h2 {
+      color: var(--paper-2);
+      margin-bottom: 0;
+    }
+
+    .script-card {
+      padding: 22px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #eee7dc;
+      line-height: 1.75;
+      font-size: 1.08rem;
+    }
+
+    .footer {
+      padding: 28px 22px 44px;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .footer-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 20px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer a {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .reveal {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 520ms ease, transform 520ms ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 980px) {
+      .nav-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      h1 {
+        font-size: 3.2rem;
+      }
+
+      h2 {
+        font-size: 2.2rem;
+      }
+
+      .hero-grid,
+      .answer-grid,
+      .persona-panel,
+      .scenario-layout,
+      .surface-grid,
+      .security-panel,
+      .final-card {
+        grid-template-columns: 1fr;
+      }
+
+      .workbench-body {
+        grid-template-columns: 120px 1fr;
+      }
+
+      .workflow {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .scenario-list {
+        position: static;
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .start-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .section {
+        padding: 62px 16px;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: 46px;
+      }
+
+      h1 {
+        font-size: 2.45rem;
+        line-height: 1.04;
+      }
+
+      h2 {
+        font-size: 1.85rem;
+        line-height: 1.12;
+      }
+
+      .lead {
+        font-size: 1.02rem;
+      }
+
+      .workbench-body,
+      .task-content {
+        grid-template-columns: 1fr;
+      }
+
+      .side-panel {
+        display: none;
+      }
+
+      .agent-row {
+        grid-template-columns: 1fr;
+      }
+
+      .status {
+        justify-self: start;
+      }
+
+      .visual-tag {
+        position: static;
+        margin: 0 18px 18px;
+      }
+
+      .compare-row {
+        grid-template-columns: 1fr;
+      }
+
+      .persona-outcomes,
+      .workflow,
+      .surfaces,
+      .scenario-list {
+        grid-template-columns: 1fr;
+      }
+
+      .task-pane + .task-pane {
+        border-left: 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .permission-row {
+        grid-template-columns: 1fr;
+      }
+
+      .brand small {
+        white-space: normal;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+
+  <nav class="nav" aria-label="页面导航">
+    <div class="nav-inner">
+      <a class="brand" href="#top" aria-label="回到顶部">
+        <span class="brand-mark">C</span>
+        <span>
+          <strong>Levin Promos 业务 Codex 指南</strong>
+          <small>询盘、报价、样品、订单都有下一步</small>
+        </span>
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="#what">先讲明白</a>
+        <a href="#who">按岗位看</a>
+        <a href="#flow">业务流</a>
+        <a href="#cases">能做什么</a>
+        <a href="#safe">使用边界</a>
+        <a href="#start">第一条任务</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+    <section class="section hero" data-section="top">
+      <div class="inner hero-grid">
+        <div class="hero-copy reveal">
+          <div class="eyebrow">Levin Promos × Codex</div>
+          <h1>让每个外贸动作，都变成可检查的下一步。</h1>
+          <p class="lead">
+            对业务团队来说，Codex 不是“写代码工具”，而是一个会读资料、拆流程、写草稿、做清单的工作助理。它可以帮你处理询盘、报价邮件、样品节点、订单跟进和周报复盘；你负责判断客户、确认价格、承诺交期和最终发送。
+          </p>
+          <div class="hero-actions">
+            <a class="button" href="#what">先看业务版 30 秒</a>
+            <a class="ghost-button" href="#cases">看看能做什么</a>
+          </div>
+          <p class="hero-note">
+            这份指南面向 Levin Promos 业务部门：把制度里的 24 小时响应、优质询盘 4 小时、ERP 录入前准备、样品和订单闭环，翻译成 Codex 能帮忙的日常动作。
+          </p>
+          <div class="source-strip" aria-label="资料来源">
+            <a href="https://openai.com/codex/" target="_blank" rel="noreferrer">OpenAI Codex 产品页</a>
+            <a href="#cases">LV-SO-BD-006 询盘处理</a>
+            <a href="#cases">LV-SO-BD-007 订单管理</a>
+            <a href="#safe">LV-RP-BD-004 工作规范</a>
+          </div>
+        </div>
+
+        <div class="workbench reveal" aria-label="Codex 工作台示意图">
+          <div class="workbench-top">
+            <div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+            <div class="workbench-label">BD workflow · Levin Promos</div>
+          </div>
+          <div class="workbench-body">
+            <aside class="side-panel">
+              <div class="side-title">BD TASKS</div>
+              <div class="project-item active"><span class="project-dot"></span>询盘处理</div>
+              <div class="project-item"><span class="project-dot"></span>报价邮件</div>
+              <div class="project-item"><span class="project-dot"></span>样品订单</div>
+              <div class="project-item"><span class="project-dot"></span>周报复盘</div>
+            </aside>
+            <div class="thread-panel">
+              <div class="prompt-card">
+                <b>你交代任务</b>
+                <div class="prompt-text">“帮我拆这个 ASI 询盘：客户是谁、需求缺什么、问工厂哪些信息、第一封英文回复怎么写。”</div>
+              </div>
+              <div class="agent-stack">
+                <div class="agent-row">
+                  <strong>读取 SOP</strong>
+                  <span>匹配询盘、客户管理、报价和订单节点。</span>
+                  <em class="status">完成</em>
+                </div>
+                <div class="agent-row">
+                  <strong>拆解询盘</strong>
+                  <span>客户背调、需求缺口、询价四要素。</span>
+                  <em class="status">进行中</em>
+                </div>
+                <div class="agent-row">
+                  <strong>输出草稿</strong>
+                  <span>英文回复、工厂询价单、ERP录入前草稿。</span>
+                  <em class="status">待检查</em>
+                </div>
+              </div>
+              <div class="terminal" aria-label="命令输出示意">
+                <div>&gt; reading LV-SO-BD-006 inquiry SOP</div>
+                <div class="ok">✓ extracted customer background checklist</div>
+                <div>&gt; drafting supplier inquiry and client reply</div>
+                <div class="warn">human review needed: price, lead time, promise</div>
+              </div>
+            </div>
+          </div>
+          <div class="visual-tag">你看的是“下一步怎么做”，不是一段 AI 套话</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section answer-band" id="what" data-section="what">
+      <div class="inner answer-grid">
+        <div class="big-answer reveal">
+          <div class="eyebrow">30 秒版本</div>
+          <h2>Codex 对业务来说，不是聊天工具，是流程助理。</h2>
+          <p>
+            它最适合做三类事：把客户信息拆清楚，把 SOP 动作变成清单，把邮件、报价说明、订单预警、周报复盘先写成可检查的草稿。
+          </p>
+          <div class="quote-line">
+            业务员不用懂 AI；只要会把客户邮件、产品资料、限制条件交代清楚，Codex 就能先产出一版可检查材料。
+          </div>
+        </div>
+        <div class="comparison reveal">
+          <div class="compare-row">
+            <b>业务员</b>
+            <span>判断客户价值、确认利润和交期、维护关系、最终对客户承诺。</span>
+          </div>
+          <div class="compare-row">
+            <b>Codex</b>
+            <span>读制度和资料，整理客户背调、需求缺口、询价清单、英文邮件、订单节点和复盘初稿。</span>
+          </div>
+          <div class="compare-row">
+            <b>使用边界</b>
+            <span>它可以给草稿和清单，但不能替你决定报价、承诺交期、发送客户邮件，也不能替代公司 ERP。</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="who" data-section="who">
+      <div class="inner persona-panel">
+        <div class="reveal">
+          <div class="eyebrow">按岗位看</div>
+          <h2>业务部门不同角色，用 Codex 的价值不一样。</h2>
+          <p class="lead">
+            新人需要按 SOP 不漏项，成熟业务需要省时间，主管需要看风险和复盘，协同部门需要材料更清楚。
+          </p>
+          <div class="segment" role="tablist" aria-label="选择身份">
+            <button class="seg-button active" data-persona="boss" type="button">PA 新人</button>
+            <button class="seg-button" data-persona="pm" type="button">PM / AM</button>
+            <button class="seg-button" data-persona="dev" type="button">SAM / 主管</button>
+            <button class="seg-button" data-persona="new" type="button">协同部门</button>
+          </div>
+        </div>
+
+        <article class="persona-card reveal" aria-live="polite">
+          <small id="personaLabel">PA 新人最需要</small>
+          <h3 id="personaTitle">把 SOP 变成每天照着做的清单。</h3>
+          <p id="personaText">
+            新人最怕漏项：客户没背调、样品地址没提前确认、PO 信息没核对、跟进记录没写。Codex 可以把制度翻成当下任务的检查清单。
+          </p>
+          <div class="persona-outcomes">
+            <div class="mini-metric">
+              <b id="metricOne">少漏步骤</b>
+              <span>照 SOP 做检查。</span>
+            </div>
+            <div class="mini-metric">
+              <b id="metricTwo">更敢回复</b>
+              <span>先有英文草稿。</span>
+            </div>
+            <div class="mini-metric">
+              <b id="metricThree">准备录入</b>
+              <span>ERP 字段先整理。</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section compact surface-band" id="flow" data-section="flow">
+      <div class="inner">
+        <div class="reveal">
+          <div class="eyebrow">业务流</div>
+          <h2>它贴着业务流走：先判断，再执行，再留痕。</h2>
+          <p class="lead">
+            Codex 不应该绕开业务制度。它应该帮你把客户邮件、SOP、产品资料和限制条件对齐，然后产出能让人检查的下一步。
+          </p>
+        </div>
+
+        <div class="workflow">
+          <article class="step reveal">
+            <div class="step-number">1</div>
+            <h3>输入客户材料</h3>
+            <p>给客户邮件、产品链接、数量、交期、目标市场、你已经确认过的信息。</p>
+          </article>
+          <article class="step reveal">
+            <div class="step-number">2</div>
+            <h3>按 SOP 拆解</h3>
+            <p>匹配询盘处理、客户管理、样品、订单、周报等制度，列出缺口和风险。</p>
+          </article>
+          <article class="step reveal">
+            <div class="step-number">3</div>
+            <h3>生成草稿清单</h3>
+            <p>输出英文邮件、工厂询价单、客户背调、报价说明、订单节点或周报初稿。</p>
+          </article>
+          <article class="step reveal">
+            <div class="step-number">4</div>
+            <h3>人确认并留痕</h3>
+            <p>业务员确认价格、利润、交期、客户承诺，并在公司 ERP 中完成正式录入与留痕。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="cases" data-section="cases">
+      <div class="inner scenario-layout">
+        <div class="reveal">
+          <div class="eyebrow">岗位动作矩阵</div>
+          <h2>你的岗位，今天可以让 Codex 接哪一步。</h2>
+          <p class="lead">
+            不再泛泛说“提高效率”。这里按 Levin Promos 业务岗位拆：输入什么、产出什么、你要确认什么。
+          </p>
+          <div class="scenario-list" role="tablist" aria-label="选择岗位">
+            <button class="scenario-button active" data-scenario="h5" type="button">PA 新人</button>
+            <button class="scenario-button" data-scenario="bug" type="button">PM / AM</button>
+            <button class="scenario-button" data-scenario="doc" type="button">SAM / 主管</button>
+            <button class="scenario-button" data-scenario="auto" type="button">协同岗位</button>
+          </div>
+        </div>
+
+        <div class="task-board reveal" aria-live="polite">
+          <div class="task-head">
+            <div>
+              <b id="scenarioTitle">PA 新人：把 SOP 变成不漏项的执行清单</b>
+              <span id="scenarioSub">适合第一次独立处理询盘、样品、ERP 录入前资料准备、PO 核对时使用。</span>
+            </div>
+            <div class="task-pill" id="scenarioPill">PA daily assistant</div>
+          </div>
+          <div class="task-content">
+            <div class="task-pane">
+              <h3>你可以这样交代</h3>
+              <div class="prompt-box" id="scenarioPrompt">
+                我是 PA，新收到一个 ASI 询盘。客户要 500pcs hand tally counter，但没说 logo、包装和 deadline。请按 LV-SO-BD-006 帮我列出背调、需求缺口、问客户的问题、问工厂的询价四要素，以及第一封英文回复草稿。
+              </div>
+              <div class="deliverable" id="scenarioDeliverables">
+                <div><b>询盘检查</b><span>客户背调 / 需求缺口 / 评分</span></div>
+                <div><b>执行草稿</b><span>英文回复 / 工厂询价 / ERP 录入字段</span></div>
+                <div><b>提醒事项</b><span>24h 回复 / 优质询盘 4h</span></div>
+              </div>
+            </div>
+            <div class="task-pane">
+              <h3>Codex 交付以后，人要确认什么</h3>
+              <div class="checks" id="scenarioChecks">
+                <div class="check-item">
+                  <div class="check-mark">✓</div>
+                  <div><b>客户判断</b><span>这个客户值不值得优先跟，是否需要请 PM/AM 看一眼。</span></div>
+                </div>
+                <div class="check-item">
+                  <div class="check-mark">✓</div>
+                  <div><b>事实准确</b><span>公司名、联系人、数量、产品要求不能照抄错。</span></div>
+                </div>
+                <div class="check-item">
+                  <div class="check-mark">✓</div>
+                  <div><b>最终落地</b><span>邮件由负责人检查后发送，客户/订单信息仍在公司 ERP 里录入。</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section compact surface-band">
+      <div class="inner surface-grid">
+        <div class="reveal">
+          <div class="eyebrow">岗位里的具体动作</div>
+          <h2>把 Codex 放进每天的业务动作里，而不是另开一套工作。</h2>
+          <p class="lead">
+            最好用的方式，是让它接住每个岗位“最容易漏、最费时间、最需要标准化”的那一段。
+          </p>
+        </div>
+        <div class="surfaces reveal">
+          <article class="surface-card">
+            <div class="surface-icon">CRM</div>
+            <h3>PA：ERP 录入前准备</h3>
+            <p>客户公司全称、联系人、邮箱域名、国家、来源、初始星级、备注要点先整理，正式建档仍在公司 ERP 完成。</p>
+          </article>
+          <article class="surface-card">
+            <div class="surface-icon">Mail</div>
+            <h3>PM/AM：报价前准备</h3>
+            <p>成本、运费、利润、MOQ、lead time、有效期、替代方案和英文报价说明先成稿。</p>
+          </article>
+          <article class="surface-card">
+            <div class="surface-icon">PO</div>
+            <h3>SAM：风险与复盘</h3>
+            <p>从周报、订单异常、客户投诉和真实案例中抽出风险、教训和培训材料。</p>
+          </article>
+          <article class="surface-card">
+            <div class="surface-icon">Rpt</div>
+            <h3>协同：资料一次给全</h3>
+            <p>给采购、美工、财务、物流的输入先核对，减少“还缺一个信息”的来回。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="safe" data-section="safe">
+      <div class="inner security-panel">
+        <div class="reveal">
+          <div class="eyebrow">使用边界</div>
+          <h2>真正的边界：客户承诺、价格、交期，必须由人确认。</h2>
+          <p class="lead">
+            业务资料里有客户信息、报价体系、供应商资源和收款信息。Codex 可以帮你整理和起草，但不能绕过保密、审批和人工验收。
+          </p>
+
+          <div class="mode-bar" role="tablist" aria-label="选择安全模式说明">
+            <button class="mode-button active" data-mode="folder" type="button">资料范围</button>
+            <button class="mode-button" data-mode="permission" type="button">报价承诺</button>
+            <button class="mode-button" data-mode="review" type="button">ERP为准</button>
+          </div>
+
+          <article class="security-card" aria-live="polite">
+            <h3 id="modeTitle">只给完成任务需要的材料。</h3>
+            <p id="modeText">
+              可以给客户询盘、产品规格、相关 SOP 片段和你已确认的信息。不要无边界投喂客户隐私、收款账户、报价底线或与当前任务无关的内部资料。
+            </p>
+          </article>
+        </div>
+
+        <div class="permission-box reveal" aria-label="权限确认示意">
+          <header>
+            <b>BD review points</b>
+            <span>必须人工确认</span>
+          </header>
+          <div class="permission-body">
+            <div class="permission-row">
+              <b>客户资料</b>
+              <span>客户信息、联系人、采购记录、报价体系不得随意外传。</span>
+            </div>
+            <div class="permission-row">
+              <b>价格交期</b>
+              <span>利润率、样品收费、物流方案、交期承诺必须业务员确认。</span>
+            </div>
+            <div class="permission-row">
+              <b>ERP 正式系统</b>
+              <span>客户建档、商机、样品单、订单信息和跟进记录，最终都在公司 ERP 中录入确认。</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section compact" id="start" data-section="start">
+      <div class="inner">
+        <div class="reveal">
+          <div class="eyebrow">第一条任务</div>
+          <h2>给 Codex 的第一句话，不要像许愿，要像派业务任务。</h2>
+          <p class="lead">
+            不要只说“帮我回客户”。要给背景、给限制、要输出格式。这样 Codex 才能按 Levin Promos 的业务逻辑做出可检查结果。
+          </p>
+        </div>
+        <div class="start-grid">
+          <article class="start-card reveal">
+            <b>1</b>
+            <h3>给业务背景</h3>
+            <p>说明询盘来源、客户国家、产品、数量、交期、客户已给的信息，以及你担心的点。</p>
+            <div class="prompt-sample">例：这是 ASI 询盘，客户要 500pcs hand tally counter，德国客户，想要 best price。</div>
+          </article>
+          <article class="start-card reveal">
+            <b>2</b>
+            <h3>给 SOP 和限制</h3>
+            <p>告诉它按哪份制度、哪些事情不能替你决定，比如利润、交期、最终承诺。</p>
+            <div class="prompt-sample">例：按 LV-SO-BD-006；利润低于 15% 不要建议直接报价；只出草稿，不替我发送。</div>
+          </article>
+          <article class="start-card reveal">
+            <b>3</b>
+            <h3>指定输出格式</h3>
+            <p>让它按你能直接用的结构输出，不要一大段泛泛建议。</p>
+            <div class="prompt-sample">例：输出客户画像、需求缺口、工厂询价四要素、英文邮件草稿、ERP 录入字段草稿。</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section final-band">
+      <div class="inner final-card reveal">
+        <h2>给业务同事讲 Codex，就讲这段。</h2>
+        <div class="script-card">
+          在 Levin Promos，Codex 可以当作业务流程助理。它帮你把询盘、客户背调、报价邮件、样品订单节点、交期预警和周报复盘，先整理成可检查的草稿和清单。最终客户判断、价格利润、交期承诺、邮件发送，以及公司 ERP 中的正式录入，仍然由业务员负责。
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <span>基于 OpenAI 官方 Codex 资料，并结合 Levin Promos 业务部门制度与 SOP 整理。</span>
+      <span>
+        <a href="https://openai.com/codex/" target="_blank" rel="noreferrer">产品页</a>
+        ·
+        <a href="https://openai.com/index/introducing-the-codex-app/" target="_blank" rel="noreferrer">App 介绍</a>
+        ·
+        <a href="https://developers.openai.com/codex/cli" target="_blank" rel="noreferrer">文档</a>
+      </span>
+    </div>
+  </footer>
+
+  <script>
+    const progressBar = document.getElementById("progressBar");
+    const navLinks = Array.from(document.querySelectorAll("#navLinks a"));
+    const sections = Array.from(document.querySelectorAll("[data-section]"));
+
+    const personaData = {
+      boss: {
+        label: "PA 新人最需要",
+        title: "把 SOP 变成每天照着做的清单。",
+        text: "新人最怕漏项：客户没背调、样品地址没提前确认、PO 信息没核对、跟进记录没写。Codex 可以把制度翻成当下任务的检查清单。",
+        metrics: ["少漏步骤", "照 SOP 做检查。", "更敢回复", "先有英文草稿。", "准备录入", "ERP 字段先整理。"]
+      },
+      pm: {
+        label: "PM / AM 最常用",
+        title: "把客户沟通前的准备工作先做完。",
+        text: "成熟业务最缺的是时间。Codex 可以先做客户背调、询价单、报价说明、催确认话术、交期预警和复盘初稿，让你把精力放在判断客户和推进成交上。",
+        metrics: ["回复更快", "草稿先到位。", "判断更稳", "缺口先列清。", "跟进更密", "1-3-7 节奏不忘。"]
+      },
+      dev: {
+        label: "SAM / 主管最关注",
+        title: "把风险、复盘和培训材料沉淀下来。",
+        text: "主管要看的不是某一封邮件写得漂不漂亮，而是团队有没有按制度做、风险有没有提前暴露、经验能不能复用。Codex 适合把案例变成培训、把周报变成复盘。",
+        metrics: ["看风险", "交期/利润/客户。", "看过程", "是否按 SOP 留痕。", "看成长", "案例沉淀成教材。"]
+      },
+      new: {
+        label: "协同部门最需要",
+        title: "让业务提交的材料更完整、更容易处理。",
+        text: "运营、财务、采购、美工、物流最怕信息不全。Codex 可以帮业务员先检查客户资料、产品信息、PO/PI、artwork、样品和出货节点，减少来回补问。",
+        metrics: ["少返工", "资料一次给全。", "少扯皮", "费用归属写清。", "少误会", "话术先统一。"]
+      }
+    };
+
+    const scenarioData = {
+      h5: {
+        title: "PA 新人：把 SOP 变成不漏项的执行清单",
+        sub: "适合第一次独立处理询盘、样品、ERP 录入前资料准备、PO 核对时使用。",
+        pill: "PA daily assistant",
+        prompt: "我是 PA，新收到一个 ASI 询盘。客户要 500pcs hand tally counter，但没说 logo、包装和 deadline。请按 LV-SO-BD-006 帮我列出背调、需求缺口、问客户的问题、问工厂的询价四要素，以及第一封英文回复草稿。",
+        deliverables: [
+          ["询盘检查", "客户背调 / 需求缺口 / 评分"],
+          ["执行草稿", "英文回复 / 工厂询价 / ERP 录入字段"],
+          ["提醒事项", "24h 回复 / 优质询盘 4h"]
+        ],
+        checks: [
+          ["客户判断", "这个客户值不值得优先跟，是否需要请 PM/AM 看一眼。"],
+          ["事实准确", "公司名、联系人、数量、产品要求不能照抄错。"],
+          ["最终落地", "邮件由负责人检查后发送，客户/订单信息仍在公司 ERP 里录入。"]
+        ]
+      },
+      bug: {
+        title: "PM / AM：把客户沟通前的准备做扎实",
+        sub: "适合处理高质量询盘、报价策略、老客户跟进、样品转大货和交期压力。",
+        pill: "PM/AM sales cockpit",
+        prompt: "我是 PM/AM。客户要 1000pcs custom mugs，要求 DDP CA，活动 deadline 是 8 月 20 日。请帮我做报价前核算清单、需要问工厂的信息、给客户的英文报价邮件、1-3-7 跟进计划，以及如果交期风险出现时的预警话术。",
+        deliverables: [
+          ["报价准备", "成本 / 运费 / 利润 / 汇率 / DDP"],
+          ["客户沟通", "报价邮件 / 替代方案 / 跟进节奏"],
+          ["推进清单", "样品 / artwork / deadline / 下一步"]
+        ],
+        checks: [
+          ["利润底线", "利润低于 15% 的情况不能让 Codex 建议直接报。"],
+          ["交期承诺", "工厂确认前不能对客户说死；延期要带方案沟通。"],
+          ["客户关系", "语气、让步、优先级由业务员按客户价值判断。"]
+        ]
+      },
+      doc: {
+        title: "SAM / 主管：看风险、看过程、看成长",
+        sub: "适合审周报、带新人、处理异常、沉淀真实案例和培训材料。",
+        pill: "SAM review mode",
+        prompt: "我是 SAM。请根据组员这周的询盘、订单、样品和客户跟进记录，帮我按周报规范提炼：本周高光、踩坑、风险客户、需要我介入的订单、下周目标，以及可以拿来培训新人的案例。",
+        deliverables: [
+          ["风险雷达", "交期 / 利润 / 客诉 / 客户流失"],
+          ["辅导重点", "新人漏项 / 话术问题 / SOP 偏差"],
+          ["培训材料", "真实案例 / 正确做法 / 教训"]
+        ],
+        checks: [
+          ["不能只看文字", "还要结合订单金额、客户等级、实际沟通质量。"],
+          ["不要替代管理", "Codex 给线索，主管负责判断和反馈。"],
+          ["沉淀为制度", "优秀话术和踩坑案例要反哺培训。"]
+        ]
+      },
+      auto: {
+        title: "协同岗位：让业务提交的材料一次到位",
+        sub: "适合采购、美工、财务、物流、运营减少补问和返工。",
+        pill: "cross-team handoff",
+        prompt: "我是业务员，准备把这个订单交给美工/采购/财务/物流协同。请帮我检查还缺哪些信息：artwork、PMS 色号、包装、唛头、收款状态、样品费用归属、物流方式、deadline，并生成一份给对应同事的清晰交接说明。",
+        deliverables: [
+          ["给美工", "logo / PMS / 位置 / virtual proof"],
+          ["给采购", "规格 / 数量 / 交期 / 工厂问题"],
+          ["给财务物流", "收款 / 样品费用 / 发货方式"]
+        ],
+        checks: [
+          ["责任清楚", "谁等谁、缺什么、deadline 是哪天要写明。"],
+          ["费用清楚", "样品费、快递费、尾款、运费归属不能模糊。"],
+          ["材料清楚", "不要让协同部门再猜客户到底要什么。"]
+        ]
+      }
+    };
+
+    const modeData = {
+      folder: {
+        title: "只给完成任务需要的材料。",
+        text: "可以给客户询盘、产品规格、相关 SOP 片段和你已确认的信息。不要无边界投喂客户隐私、收款账户、报价底线或与当前任务无关的内部资料。"
+      },
+      permission: {
+        title: "涉及价格、利润、交期时，只能让它做草稿。",
+        text: "Codex 可以提醒你核算成本、运费、汇率、利润率和交期风险，但最终报价、样品收费、低利润申请、发货方案和客户承诺必须由业务员或主管确认。"
+      },
+      review: {
+        title: "客户邮件和 ERP 正式数据，最后都要人来落地。",
+        text: "Codex 写出的英文邮件、跟进草稿、周报和出货通知都只是初稿。发送前要检查事实；客户、商机、样品单和订单节点仍以公司 ERP 中的正式录入为准。"
+      }
+    };
+
+    function setPersona(key) {
+      const data = personaData[key];
+      document.getElementById("personaLabel").textContent = data.label;
+      document.getElementById("personaTitle").textContent = data.title;
+      document.getElementById("personaText").textContent = data.text;
+      document.getElementById("metricOne").textContent = data.metrics[0];
+      document.getElementById("metricOne").nextElementSibling.textContent = data.metrics[1];
+      document.getElementById("metricTwo").textContent = data.metrics[2];
+      document.getElementById("metricTwo").nextElementSibling.textContent = data.metrics[3];
+      document.getElementById("metricThree").textContent = data.metrics[4];
+      document.getElementById("metricThree").nextElementSibling.textContent = data.metrics[5];
+    }
+
+    function renderRows(items, targetId) {
+      const target = document.getElementById(targetId);
+      target.innerHTML = items.map(([title, text]) => (
+        `<div><b>${title}</b><span>${text}</span></div>`
+      )).join("");
+    }
+
+    function renderChecks(items) {
+      const target = document.getElementById("scenarioChecks");
+      target.innerHTML = items.map(([title, text]) => (
+        `<div class="check-item"><div class="check-mark">✓</div><div><b>${title}</b><span>${text}</span></div></div>`
+      )).join("");
+    }
+
+    function setScenario(key) {
+      const data = scenarioData[key];
+      document.getElementById("scenarioTitle").textContent = data.title;
+      document.getElementById("scenarioSub").textContent = data.sub;
+      document.getElementById("scenarioPill").textContent = data.pill;
+      document.getElementById("scenarioPrompt").textContent = data.prompt;
+      renderRows(data.deliverables, "scenarioDeliverables");
+      renderChecks(data.checks);
+    }
+
+    function setMode(key) {
+      const data = modeData[key];
+      document.getElementById("modeTitle").textContent = data.title;
+      document.getElementById("modeText").textContent = data.text;
+    }
+
+    document.querySelectorAll(".seg-button").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".seg-button").forEach((item) => item.classList.remove("active"));
+        button.classList.add("active");
+        setPersona(button.dataset.persona);
+      });
+    });
+
+    document.querySelectorAll(".scenario-button").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".scenario-button").forEach((item) => item.classList.remove("active"));
+        button.classList.add("active");
+        setScenario(button.dataset.scenario);
+      });
+    });
+
+    document.querySelectorAll(".mode-button").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".mode-button").forEach((item) => item.classList.remove("active"));
+        button.classList.add("active");
+        setMode(button.dataset.mode);
+      });
+    });
+
+    function updateProgress() {
+      const doc = document.documentElement;
+      const scrollTop = doc.scrollTop || document.body.scrollTop;
+      const scrollHeight = doc.scrollHeight - doc.clientHeight;
+      const percent = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+      progressBar.style.width = `${percent}%`;
+    }
+
+    function updateActiveNav() {
+      let active = "top";
+      const offset = window.innerHeight * 0.35;
+      sections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= offset) {
+          active = section.dataset.section;
+        }
+      });
+
+      navLinks.forEach((link) => {
+        const key = link.getAttribute("href").replace("#", "");
+        link.classList.toggle("active", key === active);
+      });
+    }
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.18 });
+
+    document.querySelectorAll(".reveal").forEach((item) => revealObserver.observe(item));
+
+    function revealPassedItems() {
+      const threshold = window.innerHeight * 0.92;
+      document.querySelectorAll(".reveal:not(.visible)").forEach((item) => {
+        if (item.getBoundingClientRect().top < threshold) {
+          item.classList.add("visible");
+          revealObserver.unobserve(item);
+        }
+      });
+    }
+
+    window.addEventListener("scroll", () => {
+      revealPassedItems();
+      updateProgress();
+      updateActiveNav();
+    }, { passive: true });
+
+    revealPassedItems();
+    updateProgress();
+    updateActiveNav();
+  </script>
+</body>
+</html>
