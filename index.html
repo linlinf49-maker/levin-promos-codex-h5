@@ -374,13 +374,27 @@
 
     .project-item {
       min-height: 38px;
+      width: 100%;
+      border: 0;
       display: flex;
       align-items: center;
       gap: 8px;
       padding: 8px;
       border-radius: 8px;
+      background: transparent;
+      font: inherit;
       font-size: 0.82rem;
       color: #49534c;
+      text-align: left;
+      cursor: pointer;
+      transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+    }
+
+    .project-item:hover,
+    .project-item:focus-visible {
+      background: rgba(30, 35, 32, 0.08);
+      outline: none;
+      transform: translateY(-1px);
     }
 
     .project-item.active {
@@ -1195,7 +1209,16 @@
       }
 
       .side-panel {
-        display: none;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .side-title {
+        grid-column: 1 / -1;
+        margin-bottom: 2px;
       }
 
       .agent-row {
@@ -1292,42 +1315,42 @@
           <div class="workbench-body">
             <aside class="side-panel">
               <div class="side-title">BD TASKS</div>
-              <div class="project-item active"><span class="project-dot"></span>询盘处理</div>
-              <div class="project-item"><span class="project-dot"></span>报价邮件</div>
-              <div class="project-item"><span class="project-dot"></span>样品订单</div>
-              <div class="project-item"><span class="project-dot"></span>周报复盘</div>
+              <button class="project-item active" data-workbench="inquiry" type="button"><span class="project-dot"></span>询盘处理</button>
+              <button class="project-item" data-workbench="quote" type="button"><span class="project-dot"></span>报价邮件</button>
+              <button class="project-item" data-workbench="sample" type="button"><span class="project-dot"></span>样品订单</button>
+              <button class="project-item" data-workbench="weekly" type="button"><span class="project-dot"></span>周报复盘</button>
             </aside>
             <div class="thread-panel">
               <div class="prompt-card">
                 <b>你交代任务</b>
-                <div class="prompt-text">“帮我拆这个 ASI 询盘：客户是谁、需求缺什么、问工厂哪些信息、第一封英文回复怎么写。”</div>
+                <div class="prompt-text" id="workbenchPrompt">“帮我拆这个 ASI 询盘：客户是谁、需求缺什么、问工厂哪些信息、第一封英文回复怎么写。”</div>
               </div>
               <div class="agent-stack">
                 <div class="agent-row">
-                  <strong>读取 SOP</strong>
-                  <span>匹配询盘、客户管理、报价和订单节点。</span>
-                  <em class="status">完成</em>
+                  <strong id="workStepOneTitle">读取 SOP</strong>
+                  <span id="workStepOneText">匹配询盘、客户管理、报价和订单节点。</span>
+                  <em class="status" id="workStepOneStatus">完成</em>
                 </div>
                 <div class="agent-row">
-                  <strong>拆解询盘</strong>
-                  <span>客户背调、需求缺口、询价四要素。</span>
-                  <em class="status">进行中</em>
+                  <strong id="workStepTwoTitle">拆解询盘</strong>
+                  <span id="workStepTwoText">客户背调、需求缺口、询价四要素。</span>
+                  <em class="status" id="workStepTwoStatus">进行中</em>
                 </div>
                 <div class="agent-row">
-                  <strong>输出草稿</strong>
-                  <span>英文回复、工厂询价单、ERP录入前草稿。</span>
-                  <em class="status">待检查</em>
+                  <strong id="workStepThreeTitle">输出草稿</strong>
+                  <span id="workStepThreeText">英文回复、工厂询价单、ERP录入前草稿。</span>
+                  <em class="status" id="workStepThreeStatus">待检查</em>
                 </div>
               </div>
               <div class="terminal" aria-label="命令输出示意">
-                <div>&gt; reading LV-SO-BD-006 inquiry SOP</div>
-                <div class="ok">✓ extracted customer background checklist</div>
-                <div>&gt; drafting supplier inquiry and client reply</div>
-                <div class="warn">human review needed: price, lead time, promise</div>
+                <div id="terminalLineOne">&gt; reading LV-SO-BD-006 inquiry SOP</div>
+                <div class="ok" id="terminalLineTwo">✓ extracted customer background checklist</div>
+                <div id="terminalLineThree">&gt; drafting supplier inquiry and client reply</div>
+                <div class="warn" id="terminalLineFour">human review needed: price, lead time, promise</div>
               </div>
             </div>
           </div>
-          <div class="visual-tag">你看的是“下一步怎么做”，不是一段 AI 套话</div>
+          <div class="visual-tag" id="workbenchTag">你看的是“下一步怎么做”，不是一段 AI 套话</div>
         </div>
       </div>
     </section>
@@ -1634,6 +1657,69 @@
     const navLinks = Array.from(document.querySelectorAll("#navLinks a"));
     const sections = Array.from(document.querySelectorAll("[data-section]"));
 
+    const workbenchData = {
+      inquiry: {
+        prompt: "“帮我拆这个 ASI 询盘：客户是谁、需求缺什么、问工厂哪些信息、第一封英文回复怎么写。”",
+        steps: [
+          ["读取 SOP", "匹配询盘、客户管理、报价和订单节点。", "完成"],
+          ["拆解询盘", "客户背调、需求缺口、询价四要素。", "进行中"],
+          ["输出草稿", "英文回复、工厂询价单、ERP录入前草稿。", "待检查"]
+        ],
+        terminal: [
+          "> reading LV-SO-BD-006 inquiry SOP",
+          "✓ extracted customer background checklist",
+          "> drafting supplier inquiry and client reply",
+          "human review needed: price, lead time, promise"
+        ],
+        tag: "你看的是“下一步怎么做”，不是一段 AI 套话"
+      },
+      quote: {
+        prompt: "“客户要 1000pcs custom mugs，DDP CA，帮我做报价前核算清单和英文报价邮件。”",
+        steps: [
+          ["核算结构", "拆成本、运费、利润、汇率、MOQ 和有效期。", "完成"],
+          ["组织邮件", "把 FOB/DDP、lead time、样品费和替代方案写清楚。", "进行中"],
+          ["标出红线", "低利润、交期承诺、运费波动必须人工确认。", "待检查"]
+        ],
+        terminal: [
+          "> reading quotation and logistics rules",
+          "✓ built price-check fields before quoting",
+          "> drafting client quotation email",
+          "human review needed: unit price, margin, validity"
+        ],
+        tag: "报价邮件可以先成稿，价格和承诺必须人确认"
+      },
+      sample: {
+        prompt: "“客户要寄样，请帮我检查样品信息、收件资料、费用归属、deadline 和客户确认话术。”",
+        steps: [
+          ["样品信息", "确认库存/定制、材质、颜色、印刷、包装和 deadline。", "完成"],
+          ["费用归属", "区分收费/免费样品、快递费、样品费抵扣规则。", "进行中"],
+          ["寄样话术", "输出客户确认清单、工厂/物流交接说明。", "待检查"]
+        ],
+        terminal: [
+          "> reading LV-SO-BD-003 sample SOP",
+          "✓ checked address, phone, blind ship, deadline",
+          "> drafting sample confirmation message",
+          "human review needed: sample fee, freight, recipient"
+        ],
+        tag: "样品最怕信息不全，Codex 先帮你把缺口列出来"
+      },
+      weekly: {
+        prompt: "“按业务部周报规范，帮我把本周询盘、订单、样品、重点客户、踩坑和下周目标整理成初稿。”",
+        steps: [
+          ["归拢数据", "询盘数、新客户、订单、样品、重点客户先分栏。", "完成"],
+          ["提炼重点", "高光、风险、需要支持、踩坑和改进措施。", "进行中"],
+          ["生成初稿", "按周报结构输出，留给本人核对数据。", "待检查"]
+        ],
+        terminal: [
+          "> reading LV-SO-BD-005 weekly report format",
+          "✓ grouped inquiry, sample, order, client updates",
+          "> drafting weekly review and next-week goals",
+          "human review needed: ERP numbers and actual progress"
+        ],
+        tag: "周报不是流水账，Codex 先帮你提炼重点和风险"
+      }
+    };
+
     const personaData = {
       boss: {
         label: "PA 新人最需要",
@@ -1785,6 +1871,34 @@
       document.getElementById("modeTitle").textContent = data.title;
       document.getElementById("modeText").textContent = data.text;
     }
+
+    function setWorkbench(key) {
+      const data = workbenchData[key];
+      if (!data) return;
+
+      document.getElementById("workbenchPrompt").textContent = data.prompt;
+      const titleIds = ["workStepOneTitle", "workStepTwoTitle", "workStepThreeTitle"];
+      const textIds = ["workStepOneText", "workStepTwoText", "workStepThreeText"];
+      const statusIds = ["workStepOneStatus", "workStepTwoStatus", "workStepThreeStatus"];
+      data.steps.forEach((step, index) => {
+        document.getElementById(titleIds[index]).textContent = step[0];
+        document.getElementById(textIds[index]).textContent = step[1];
+        document.getElementById(statusIds[index]).textContent = step[2];
+      });
+
+      ["terminalLineOne", "terminalLineTwo", "terminalLineThree", "terminalLineFour"].forEach((id, index) => {
+        document.getElementById(id).textContent = data.terminal[index];
+      });
+      document.getElementById("workbenchTag").textContent = data.tag;
+    }
+
+    document.querySelectorAll(".project-item").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".project-item").forEach((item) => item.classList.remove("active"));
+        button.classList.add("active");
+        setWorkbench(button.dataset.workbench);
+      });
+    });
 
     document.querySelectorAll(".seg-button").forEach((button) => {
       button.addEventListener("click", () => {
