@@ -943,6 +943,281 @@
       font-size: 0.95rem;
     }
 
+    .artwork-band {
+      background: #fffaf2;
+      border-block: 1px solid rgba(30, 35, 32, 0.1);
+    }
+
+    .artwork-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(390px, 1.08fr);
+      gap: 28px;
+      align-items: start;
+    }
+
+    .proof-board {
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      background: var(--white);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .proof-top {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 0 15px;
+      background: #242a27;
+      color: var(--paper-2);
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .proof-stage {
+      position: relative;
+      min-height: 335px;
+      display: grid;
+      place-items: center;
+      padding: 34px 24px 28px;
+      background:
+        linear-gradient(135deg, rgba(19, 107, 85, 0.08), rgba(217, 95, 67, 0.06)),
+        var(--paper-2);
+    }
+
+    .product-bottle {
+      position: relative;
+      width: min(270px, 72%);
+      height: 246px;
+      border: 2px solid #27302a;
+      border-radius: 54px 54px 24px 24px;
+      background:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.18) 24%, rgba(255, 255, 255, 0) 44%),
+        linear-gradient(180deg, #d9efe5, #f8fcf9);
+      box-shadow: 0 24px 44px rgba(30, 35, 32, 0.16);
+    }
+
+    .product-bottle::before {
+      content: "";
+      position: absolute;
+      top: -44px;
+      left: 50%;
+      width: 84px;
+      height: 52px;
+      border: 2px solid #27302a;
+      border-bottom: 0;
+      border-radius: 12px 12px 0 0;
+      background: #dfeee6;
+      transform: translateX(-50%);
+    }
+
+    .logo-mark {
+      position: absolute;
+      left: 50%;
+      top: 92px;
+      width: 132px;
+      min-height: 66px;
+      display: grid;
+      place-items: center;
+      border: 2px solid var(--green);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.82);
+      color: var(--green);
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      transform: translateX(-50%);
+    }
+
+    .proof-callout {
+      position: absolute;
+      right: 18px;
+      bottom: 18px;
+      max-width: 210px;
+      padding: 12px;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      background: rgba(255, 250, 242, 0.92);
+      box-shadow: var(--shadow-soft);
+      color: #46514a;
+      font-size: 0.86rem;
+      line-height: 1.45;
+    }
+
+    .logo-check-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      padding: 16px;
+      border-top: 1px solid var(--line);
+      background: #fbf7ee;
+    }
+
+    .logo-check {
+      min-height: 142px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--white);
+    }
+
+    .logo-check b {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 0.94rem;
+    }
+
+    .logo-check span {
+      color: var(--muted);
+      font-size: 0.86rem;
+      line-height: 1.45;
+    }
+
+    .artwork-panel {
+      display: grid;
+      gap: 14px;
+    }
+
+    .prompt-workflow {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .mini-step {
+      min-height: 132px;
+      padding: 15px;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      background: var(--white);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .mini-step strong {
+      display: inline-grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      background: var(--coral-2);
+      color: var(--coral);
+    }
+
+    .mini-step p {
+      margin-bottom: 0;
+      color: var(--muted);
+      line-height: 1.52;
+      font-size: 0.92rem;
+    }
+
+    .craft-card {
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      background: var(--white);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    .craft-card header {
+      padding: 16px;
+      border-bottom: 1px solid var(--line);
+      background: var(--paper-2);
+    }
+
+    .craft-card header b {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .craft-card header span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .craft-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 14px 16px 0;
+    }
+
+    .craft-body {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      padding: 16px;
+    }
+
+    .craft-body div {
+      min-height: 112px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbf7ee;
+    }
+
+    .craft-body b {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--green);
+    }
+
+    .craft-body span {
+      color: #46514a;
+      line-height: 1.48;
+      font-size: 0.9rem;
+    }
+
+    .talk-track {
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+      gap: 12px;
+    }
+
+    .talk-box {
+      min-height: 190px;
+      padding: 16px;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      background: var(--white);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .talk-box h3 {
+      margin-bottom: 12px;
+    }
+
+    .talk-box p,
+    .talk-box li {
+      color: #46514a;
+      line-height: 1.62;
+    }
+
+    .talk-box ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .prompt-code {
+      margin: 0;
+      white-space: pre-wrap;
+      color: #eee7dc;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.82rem;
+      line-height: 1.58;
+    }
+
+    .prompt-talk {
+      background: #242a27;
+      color: var(--paper-2);
+    }
+
+    .prompt-talk h3 {
+      color: var(--paper-2);
+    }
+
     .security-panel {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(360px, 0.92fr);
@@ -1156,6 +1431,7 @@
       .persona-panel,
       .scenario-layout,
       .surface-grid,
+      .artwork-grid,
       .security-panel,
       .final-card {
         grid-template-columns: 1fr;
@@ -1175,6 +1451,17 @@
       }
 
       .start-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .proof-callout {
+        position: static;
+        margin-top: 18px;
+      }
+
+      .prompt-workflow,
+      .craft-body,
+      .talk-track {
         grid-template-columns: 1fr;
       }
     }
@@ -1241,6 +1528,7 @@
       .persona-outcomes,
       .workflow,
       .surfaces,
+      .logo-check-grid,
       .scenario-list {
         grid-template-columns: 1fr;
       }
@@ -1277,6 +1565,7 @@
         <a href="#who">按岗位看</a>
         <a href="#flow">业务流</a>
         <a href="#cases">能做什么</a>
+        <a href="#artwork">Logo打样</a>
         <a href="#safe">使用边界</a>
         <a href="#start">第一条任务</a>
       </div>
@@ -1547,6 +1836,122 @@
             <h3>协同：资料一次给全</h3>
             <p>给采购、美工、财务、物流的输入先核对，减少“还缺一个信息”的来回。</p>
           </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section artwork-band" id="artwork" data-section="artwork">
+      <div class="inner artwork-grid">
+        <div class="reveal">
+          <div class="eyebrow">Logo 到产品打样</div>
+          <h2>客户发来 logo，业务员先判断能不能印，再做可确认的预览。</h2>
+          <p class="lead">
+            这不是让 Sales 变设计师，而是把“文件能不能用、需要补什么、适合什么工艺、客户怎么确认”先整理清楚。AI 可以做初步效果图和检查清单，最终印刷稿仍交给美工/工厂确认。
+          </p>
+
+          <div class="proof-board" aria-label="Logo 打样预览示意">
+            <div class="proof-top">
+              <span>Virtual proof draft</span>
+              <span>Sales preview only</span>
+            </div>
+            <div class="proof-stage">
+              <div class="product-bottle" aria-hidden="true">
+                <div class="logo-mark">CLIENT<br>LOGO</div>
+              </div>
+              <div class="proof-callout">
+                预览图用于沟通位置、比例和大致效果；不能直接当最终印刷文件。
+              </div>
+            </div>
+            <div class="logo-check-grid">
+              <div class="logo-check">
+                <b>可直接推进</b>
+                <span>AI / EPS / SVG / 高清 PDF，有矢量路径、颜色可确认，适合交给美工做正式稿。</span>
+              </div>
+              <div class="logo-check">
+                <b>可先预览</b>
+                <span>高清 PNG / JPG 可先做效果图，但要提醒客户后续可能仍需源文件。</span>
+              </div>
+              <div class="logo-check">
+                <b>必须补文件</b>
+                <span>微信截图、低清图、水印图、放大模糊、小字太细，先向客户补要矢量源文件。</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="artwork-panel">
+          <div class="prompt-workflow reveal">
+            <article class="mini-step">
+              <strong>1</strong>
+              <h3>看文件</h3>
+              <p>格式、清晰度、透明背景、矢量路径、颜色、细线小字先判断。</p>
+            </article>
+            <article class="mini-step">
+              <strong>2</strong>
+              <h3>问参数</h3>
+              <p>印刷位置、尺寸、PMS 色号、产品材质、可印面积和 deadline 要补齐。</p>
+            </article>
+            <article class="mini-step">
+              <strong>3</strong>
+              <h3>出预览</h3>
+              <p>用 AI/设计工具做 2-3 个位置和大小版本，让客户先确认方向。</p>
+            </article>
+          </div>
+
+          <article class="craft-card reveal">
+            <header>
+              <b>不同工艺，不同问法</b>
+              <span>销售先判断方向，正式可行性由美工/工厂确认。</span>
+            </header>
+            <div class="craft-tabs" role="tablist" aria-label="选择印刷工艺">
+              <button class="mode-button craft-button active" data-craft="screen" type="button">丝印</button>
+              <button class="mode-button craft-button" data-craft="uv" type="button">UV</button>
+              <button class="mode-button craft-button" data-craft="laser" type="button">镭雕</button>
+              <button class="mode-button craft-button" data-craft="embroidery" type="button">刺绣</button>
+              <button class="mode-button craft-button" data-craft="foil" type="button">烫印</button>
+            </div>
+            <div class="craft-body" aria-live="polite">
+              <div>
+                <b>适合</b>
+                <span id="craftFit">简单色块、单色或少色 logo，杯子、袋子、塑料件等常见产品。</span>
+              </div>
+              <div>
+                <b>注意</b>
+                <span id="craftRisk">渐变、阴影、太细线条和很小文字容易失真，颜色需要单独确认。</span>
+              </div>
+              <div>
+                <b>先问客户</b>
+                <span id="craftAsk">是否接受单色效果？有没有 PMS 色号？logo 尺寸大概多大？</span>
+              </div>
+            </div>
+          </article>
+
+          <div class="talk-track reveal">
+            <article class="talk-box">
+              <h3>给客户的标准话术</h3>
+              <p>
+                您好，我们已经收到 logo。为了保证印刷清晰，麻烦您优先提供 AI、EPS、SVG 或高清 PDF 源文件；如果暂时没有，也可以先用高清 PNG 做初步效果图确认位置和比例。
+              </p>
+              <ul>
+                <li>确认印刷位置和大概尺寸</li>
+                <li>确认彩色、单色、镭雕或其他效果</li>
+                <li>确认是否有指定 PMS 色号</li>
+              </ul>
+            </article>
+            <article class="talk-box prompt-talk">
+              <h3>可直接丢给 Codex 的 Prompt</h3>
+              <pre class="prompt-code">你是印刷品销售助理。
+客户准备把 logo 印在产品上。
+请帮我检查：
+1. 文件格式和清晰度是否适合印刷
+2. 是否需要矢量源文件
+3. 适合丝印、UV、镭雕、刺绣还是烫印
+4. 需要问客户补充确认的问题
+5. 给客户的专业回复话术
+
+输出要简洁，适合销售直接复制使用。</pre>
+            </article>
+          </div>
         </div>
       </div>
     </section>
@@ -1829,6 +2234,34 @@
       }
     };
 
+    const craftData = {
+      screen: {
+        fit: "简单色块、单色或少色 logo，杯子、袋子、塑料件等常见产品。",
+        risk: "渐变、阴影、太细线条和很小文字容易失真，颜色需要单独确认。",
+        ask: "是否接受单色效果？有没有 PMS 色号？logo 尺寸大概多大？"
+      },
+      uv: {
+        fit: "彩色 logo、渐变图案、照片感图形，适合平整或相对规则的印刷面。",
+        risk: "产品表面太弧、太软、太粗糙会影响附着和清晰度，必要时要打样。",
+        ask: "要彩色还原到什么程度？产品表面材质是什么？是否接受轻微色差？"
+      },
+      laser: {
+        fit: "金属、木材、皮革等材质上的低调高端效果，适合单色线稿和文字。",
+        risk: "镭雕通常不是彩色；不同材质雕刻后颜色深浅不同，要提前说明。",
+        ask: "客户要彩色 logo 还是接受雕刻效果？产品材质和表面颜色是什么？"
+      },
+      embroidery: {
+        fit: "帽子、服装、布包等织物产品，适合块面清楚、线条不过细的 logo。",
+        risk: "小字、渐变、超细线和复杂图案需要简化，否则针法会糊在一起。",
+        ask: "最小文字是否可以放大或删除？是否接受简化版刺绣稿？"
+      },
+      foil: {
+        fit: "礼盒、皮革、纸品等需要高级质感的 logo，常见金、银、黑等单色效果。",
+        risk: "不适合复杂彩色稿，压印面积和边缘细节要看材质与模具限制。",
+        ask: "想要金色、银色还是压凹/压凸？logo 是否可以做单色版本？"
+      }
+    };
+
     function setPersona(key) {
       const data = personaData[key];
       document.getElementById("personaLabel").textContent = data.label;
@@ -1870,6 +2303,13 @@
       const data = modeData[key];
       document.getElementById("modeTitle").textContent = data.title;
       document.getElementById("modeText").textContent = data.text;
+    }
+
+    function setCraft(key) {
+      const data = craftData[key];
+      document.getElementById("craftFit").textContent = data.fit;
+      document.getElementById("craftRisk").textContent = data.risk;
+      document.getElementById("craftAsk").textContent = data.ask;
     }
 
     function setWorkbench(key) {
@@ -1916,11 +2356,19 @@
       });
     });
 
-    document.querySelectorAll(".mode-button").forEach((button) => {
+    document.querySelectorAll(".mode-button:not(.craft-button)").forEach((button) => {
       button.addEventListener("click", () => {
-        document.querySelectorAll(".mode-button").forEach((item) => item.classList.remove("active"));
+        document.querySelectorAll(".mode-button:not(.craft-button)").forEach((item) => item.classList.remove("active"));
         button.classList.add("active");
         setMode(button.dataset.mode);
+      });
+    });
+
+    document.querySelectorAll(".craft-button").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".craft-button").forEach((item) => item.classList.remove("active"));
+        button.classList.add("active");
+        setCraft(button.dataset.craft);
       });
     });
 
